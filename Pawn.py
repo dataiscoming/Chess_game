@@ -1,15 +1,33 @@
 # Pawn object
 class Pawn():
-    # attributes : initial position (x and y), colour, direction
-    def __init__(self,x,y,colour,direction):
+    # attributes : initial position (x and y), colour,name, direction
+    def __init__(self,x,y,colour,name,direction):
         self.x = x
         self.y = y 
         self.colour = colour
         self.direction = direction
+        self.name = name
         
-    #Method Move_to :  the Pawn is able to move of one step in front of him, except it has a enemy on his sides
-    def move_to(self,x,y):
+    def __repr__(self):
+        return self.name
+    
+    def __str__(self):
+        return self.name
+        
+    #Method Move_to: avalaible move 
+    def move(self,x,y,board):
         new_position = []
-        new_position.append(x+1)
-        new_position.append(y+1)
+        new_position.append((y,x+self.direction))
+        
+        try:
+            if board[(y+1,x+self.direction)].colour != self.colour : 
+                new_position.append((y+1,x+self.direction))
+        except:
+            new_position.append((y,x+self.direction))
+        
+        try:
+            if board[(y-1,x+self.direction)].colour != self.colour :
+                new_position.append((y-1,x+self.direction))
+        except:
+            new_position.append((y,x+self.direction))
         return new_position  
